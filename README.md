@@ -1,0 +1,1 @@
+# tspota-log-uploader
