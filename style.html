@@ -1,0 +1,225 @@
+/* General Styles */
+body {
+    font-family: 'Open Sans', sans-serif; /* Changed font to Open Sans */
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-size: 16px; /* Increased base font size */
+}
+
+.container {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    line-height: 1.4; /* Increased line height */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.4; /* Increased line height */
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 10px 0;
+    line-height: 1.4; /* Increased line height */
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    clear: both;
+}
+
+#processingStatus {
+    display: none;
+    margin-left: 10px;
+    color: #4CAF50;
+    font-size: 16px;
+}
+
+#results {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+}
+
+#results h2 {
+    margin-top: 0;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .container {
+        max-width: 750px;
+        margin: auto;
+    }
+
+    #results {
+        max-width: 750px;
+    }
+
+    form {
+        max-width: 750px;
+        margin: auto;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .container {
+        max-width: 95%;
+        margin: auto;
+    }
+
+    #results {
+        max-width: 95%;
+        margin: 10px auto;
+    }
+
+    form {
+        max-width: 95%;
+        margin: auto;
+        padding: 15px;
+    }
+}
+
+/* Styles for very small screens (e.g., older iPhones) */
+@media (max-width: 480px) {
+    .container {
+      padding: 5px; /* Reduce padding */
+    }
+  
+    .form-group {
+      margin-bottom: 10px; /* Reduce margin */
+    }
+  
+    label {
+      font-size: 14px; /* Reduce font size */
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea {
+      font-size: 14px; /* Reduce font size */
+      padding: 8px;  /* Reduce padding */
+    }
+  
+    button[type="submit"] {
+      font-size: 16px; /* Adjust button font size */
+      padding: 10px 15px; /* Adjust button padding */
+    }
+  
+    #results {
+      margin-top: 10px; /* Reduce margin */
+      padding: 5px; /* Reduce padding */
+    }
+  
+    #results h2 {
+      font-size: 16px; /* Reduce font size */
+    }
+  
+    #scoreDisplay,
+    #statusMessage {
+      font-size: 14px;
+    }
+  }
+
+  /* iPhone 13 Pro media query */
+@media only screen 
+  and (device-width: 390px) 
+  and (device-height: 844px) 
+  and (-webkit-device-pixel-ratio: 3) {
+    
+    body {
+        font-size: 18px; /* Increase base font size for iPhone 13 Pro */
+    }
+
+    .container {
+        padding: 10px; /* Increase padding */
+    }
+
+    .form-group {
+        margin-bottom: 15px; /* Increase margin */
+    }
+
+    label {
+        font-size: 16px; /* Increase label font size */
+        line-height: 1.5; /* Adjust line height */
+        margin-bottom: 8px; /* Increase label bottom margin */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea {
+        font-size: 18px; /* Increase input font size */
+        padding: 12px; /* Increase input padding */
+        line-height: 1.6; /* Adjust line height */
+    }
+
+    input[type="file"] {
+        padding: 12px 0; /* Increase file input padding */
+    }
+
+    button[type="submit"] {
+        font-size: 20px; /* Increase button font size */
+        padding: 15px 25px; /* Increase button padding */
+        margin-top: 10px;
+    }
+
+    #results {
+        margin-top: 15px; /* Increase margin */
+        padding: 10px; /* Increase padding */
+    }
+
+    #results h2 {
+        font-size: 20px; /* Increase heading font size */
+    }
+
+    #scoreDisplay,
+    #statusMessage {
+        font-size: 16px; /* Increase result font size */
+        line-height: 1.5; /* Adjust line height */
+    }
+
+    #processingStatus {
+        font-size: 18px; /* Increase processing status font size */
+    }
+
+    .form-group {
+        margin-bottom: 20px; /* Increase spacing between form groups */
+    }
+}

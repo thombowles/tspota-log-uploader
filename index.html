@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contest Log Submission</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    <?!= include('style'); ?>
+  </style>
+</head>
+<body>
+  <div id="form-container">
+      <div class="container">
+        <form id="logForm">
+          <div class="form-group">
+            <label for="callsign">Callsign:</label>
+            <input type="text" id="callsign" name="callsign" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="clubCallsign">Club Callsign (Optional - Used for Club Aggregate Award):</label>
+            <input type="text" id="clubCallsign" name="clubCallsign">
+          </div>
+
+          <div class="form-group">
+              <label for="operatorClass">Operator Class:</label>
+              <select id="operatorClass" name="operatorClass" required>
+                  <option value="" selected disabled hidden>Select Operator Class</option>
+                  <option value="SOTXP">SOTXP – Single Operator Texas State Park (QRP or Low Power)</option>
+                  <option value="MSTXP">MSTXP – Multi-operator Single transmitter Texas State Park (QRP or Low Power)</option>
+                  <option value="MMTXP">MMTXP – Multi-operator Multiple transmitter Texas State Park (QRP or Low Power)</option>
+                  <option value="SO">SO – Single Operator (QRP/Low/High power) All Stations outside a Texas State Park</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+            <label for="power">Power Class:</label>
+            <select id="power" name="power">
+              <option value="QRP">QRP (</= 5 watts CW/Digital, </= 10 watts SSB)</option>
+              <option value="LOW">LOW (</= 150 Watts)</option>
+              <option id="highOption" value="HIGH" disabled>HIGH (> 150 Watts)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="adifFile">Upload ADIF File:</label>
+            <input type="file" id="adifFile" name="adifFile" accept=".adi, .adif" required>
+          </div>
+
+          <div class="form-group" id="photoUploadGroup" style="display: none;">
+              <label for="photoFile">Upload Photo (Optional - JPEG, PNG):</label>
+              <input type="file" id="photoFile" name="photoFile" accept=".jpg, .jpeg, .png">
+          </div>
+
+          <div class="form-group" id="reportTextGroup" style="display: none;">
+              <label for="reportText">Activation Report (Optional - 250 characters max):</label>
+              <textarea id="reportText" name="reportText" maxlength="250"></textarea>
+          </div>
+
+          <div class="form-group" id="bonusPointsGroup" style="display: none;">
+              <p>Submit BOTH a photo AND a report to receive 50 bonus points.</p>
+          </div>
+
+          <button type="submit">Submit Log</button>
+          <span id="processingStatus"></span>
+        </form>
+
+        <div id="results" style="display:none;">
+          <h2>Score:</h2>
+          <div id="scoreDisplay"></div>
+          <div id="statusMessage"></div>
+        </div>
+      </div>
+  </div>
+
+  <script>
+    <?!= include('script'); ?>
+  </script>
+</body>
+</html>

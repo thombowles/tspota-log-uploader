@@ -1,0 +1,152 @@
+document.getElementById('logForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent form from submitting normally
+
+    // Get form data
+    const formData = new FormData(this);
+
+    // Get the file
+    const file = formData.get('adifFile');
+    const callsign = formData.get('callsign');
+    const email = formData.get('email');
+    const operatorClass = formData.get('operatorClass');
+    const power = formData.get('power');
+    const clubCallsign = formData.get('clubCallsign'); // Get club callsign
+
+    // Validate email
+    if (!validateEmail(email)) {
+        // Display error message (you can customize this)
+        alert("Please enter a valid email address.");
+        return false; // Prevent form submission
+    }
+
+    // Get photo file and report text (may be null if not provided)
+    const photoFile = formData.get('photoFile');
+    const reportText = formData.get('reportText');
+
+    // Display loading message next to submit button
+    const processingStatus = document.getElementById('processingStatus');
+    processingStatus.textContent = 'Processing...';
+    processingStatus.style.display = 'inline'; // Make sure it's visible
+
+    // Hide results section while processing
+    document.getElementById('results').style.display = 'none';
+
+    // Convert file to Base64
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function() {
+        const fileBase64 = reader.result.split(',')[1];
+
+        // Convert photo file to Base64 (if a photo was provided)
+        if (photoFile) {
+            const photoReader = new FileReader();
+            photoReader.readAsDataURL(photoFile);
+            photoReader.onload = function() {
+                const photoBase64 = photoReader.result.split(',')[1];
+
+                // Send data to Google Apps Script
+                google.script.run
+                    .withSuccessHandler(handleResponse)
+                    .withFailureHandler(handleError)
+                    .processLog(fileBase64, callsign, file.name, operatorClass, power, email, clubCallsign, photoBase64, reportText);
+            };
+        } else {
+            // Send data to Google Apps Script (no photo provided)
+            google.script.run
+                .withSuccessHandler(handleResponse)
+                .withFailureHandler(handleError)
+                .processLog(fileBase64, callsign, file.name, operatorClass, power, email, clubCallsign, null, reportText);
+        }
+    };
+
+    return false; // Prevent default form submission behavior
+});
+
+function handleResponse(response) {
+    // Display score and any messages from the backend
+    document.getElementById('scoreDisplay').textContent = response.score;
+    document.getElementById('statusMessage').innerHTML = response.message; // Use innerHTML for line breaks
+
+    // Update and hide the processing status
+    const processingStatus = document.getElementById('processingStatus');
+    processingStatus.textContent = ''; // Clear the message
+    processingStatus.style.display = 'none'; // Hide status
+
+    // Show the results section
+    document.getElementById('results').style.display = 'block';
+
+    // Reset the form
+    document.getElementById('logForm').reset();
+
+    // Scroll to the bottom of the page
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+    });
+}
+
+function handleError(error) {
+    // Display error message
+    document.getElementById('scoreDisplay').textContent = 'Error';
+    document.getElementById('statusMessage').textContent = error.message;
+
+    // Update and hide the processing status
+    const processingStatus = document.getElementById('processingStatus');
+    processingStatus.textContent = ''; // Clear the message
+    processingStatus.style.display = 'none'; // Hide status
+
+    // Show the results section
+    document.getElementById('results').style.display = 'block';
+
+    // Optionally, keep the form visible or reset it here:
+    // document.getElementById('logForm').reset(); // Reset the form
+
+    // Scroll to the bottom of the page
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+    });
+}
+
+// Function to validate email format
+function validateEmail(email) {
+  // Use a regular expression to validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Function to handle operator class change
+function handleOperatorClassChange() {
+    const operatorClass = document.getElementById('operatorClass').value;
+    const highPowerOption = document.getElementById('highOption');
+    const photoUploadGroup = document.getElementById('photoUploadGroup');
+    const reportTextGroup = document.getElementById('reportTextGroup');
+    const bonusPointsGroup = document.getElementById('bonusPointsGroup'); // Get the new div
+
+    if (operatorClass === 'SO' || operatorClass === '') {
+        highPowerOption.disabled = false;
+        photoUploadGroup.style.display = 'none';
+        reportTextGroup.style.display = 'none';
+        bonusPointsGroup.style.display = 'none'; // Hide bonus message
+    } else {
+        highPowerOption.disabled = true;
+        photoUploadGroup.style.display = 'block';
+        reportTextGroup.style.display = 'block';
+        bonusPointsGroup.style.display = 'block'; // Show bonus message
+    }
+}
+
+// Function to convert callsign input to uppercase
+document.getElementById('callsign').addEventListener('input', function(e) {
+    this.value = this.value.toUpperCase();
+});
+
+// Function to convert club callsign input to uppercase
+document.getElementById('clubCallsign').addEventListener('input', function(e) {
+    this.value = this.value.toUpperCase();
+});
+
+// Add event listener for operator class change
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('operatorClass').addEventListener('change', handleOperatorClassChange);
+});
